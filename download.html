@@ -1,0 +1,177 @@
+<title>文件下载</title>
+<style type="text/css">
+#ok{
+	font:"仿宋";
+	font-size:23px;
+	}
+#apDiv1 {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 366px;
+	z-index: 1;
+	height: 116px;
+}
+#apDiv2 {
+	position: absolute;
+	left: 0px;
+	top: 389px;
+	width: 366px;
+	height: 273px;
+	z-index: 2;
+}
+#apDiv3 {
+	position: absolute;
+	left: 386px;
+	top: 0px;
+	width: 980px;
+	height: 662px;
+	z-index: 3;
+}
+#apDiv4 {
+	position: absolute;
+	left: 0px;
+	top: 116px;
+	width: 366px;
+	height: 273px;
+	z-index: 4;
+	color: #000;
+}
+#button{
+	font-size:22px;
+}
+</style>
+<script>
+function addToDiv(divID,path){//将path中的代码添加到ID为divID的div层中
+	var request=new XMLHttpRequest();
+	request.onreadystatechange=function()
+	{
+    	if (request.readyState==4 && request.status==200)
+    	{
+			document.getElementById(divID).innerHTML=request.responseText;
+    	}
+	}
+	request.open("GET",path+"?"+Math.random(),true);
+	request.send();
+}
+function fun1(){//高中英语作文
+	
+}
+function fun2(){//高中议论文
+	
+}
+function fun3(){//高中数学复习资料(数列、立几、向量、三角函数...)
+	
+}
+function fun4(){//高中文言文重点虚词
+	
+}
+function fun5(){//高中数学综合练习
+	
+}
+function fun6(){//罗素《哲学问题》阅读
+	
+}
+</script>
+<script>
+var learning=1;//学习资料下载的当前显示页面
+var max1=2;//学习资料下载的最大页数
+window.onload=new function(){
+	updateLearning(1);
+}
+function updateLearning(page){
+	var request=new XMLHttpRequest();
+	request.onreadystatechange=function()
+	{
+    	if (request.readyState==4 && request.status==200)
+    	{
+			document.getElementById("div1").innerHTML=request.responseText;
+    	}
+		if(request.readyState==4 && request.status==404){
+				hasNext=false;
+		}
+	}
+	request.open("GET","updateHtml/learning"+page+".xml?"+Math.random(),true);
+	request.send();
+}
+function up1(){//学习资料下载的上一页
+	function clear(){
+		document.getElementById("t1").innerHTML="";
+	}
+	clear();
+	if(learning==1){
+		//提示没有上一页了
+		document.getElementById("t1").innerHTML="<a style=color:#F00>没有上一页了</a>";
+		setTimeout(clear,2600);
+	}else{
+		learning--;
+		updateLearning(learning);
+	}
+}
+function down1(){//学习资料下载的下一页
+	function clear(){
+		document.getElementById("t1").innerHTML="";
+	}
+	clear();
+	learning++;
+	if(learning>max1){
+		learning--;
+		//提示没有下一页了
+		document.getElementById("t1").innerHTML="<a style=color:#F00>没有下一页了</a>";
+		setTimeout(clear,2600);	
+	}else{
+		updateLearning(learning);
+	}
+}
+</script>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<div id="apDiv1">
+  <table width="372" height="111" border="0">
+    <tr>
+      <td width="366"><img src="flash/作品下载标题.gif" width="366" height="70" /></td>
+    </tr>
+    <tr>
+      <td height="33"><table width="352" border="0">
+        <tr>
+          <td width="240"><input name="search" type="text" id="search" style="border-color:#00F;font-size:24px" size="17" /></td>
+          <td width="107"><input type="button" name="button" id="button" value="   搜索   " /></td>
+        </tr>
+      </table></td>
+    </tr>
+  </table>
+</div>
+<div id="apDiv2">
+  <p><img src="pic/worksDownload.png" width="367" height="63" /></p>
+  <table width="362" border="0">
+    <tr>
+      <td width="150"><input type="button" name="up2" id="up2" value="上一页" style="font-size:14px"/>        &nbsp; &nbsp;
+      <input type="button" name="down2" id="down2" value="下一页" style="font-size:14px"/></td>
+      <td width="209"><div id="t2"></div></td>
+    </tr>
+  </table>
+  <div id="div2"></div>
+  <p>&nbsp; </p>
+  <div></div>
+</div>
+<div id="apDiv3">
+  <div id="main"></div>
+</div>
+<div id="apDiv4">
+  <p><img src="pic/learningDownload.png" width="367" height="63" /></p>
+  <table width="362" border="0">
+    <tr>
+      <td width="150"><input type="button" name="up1" id="up1" value="上一页" style="font-size:14px" onclick="up1()"/> 
+       &nbsp; &nbsp;
+       <input type="button" name="down1" id="down1" value="下一页" style="font-size:14px" onclick="down1()"/></td>
+      <td width="203"><div id="t1"></div></td>
+    </tr>
+  </table>
+  <div id="div1">
+    
+  </div>
+  <p><br />
+    <label for="textarea"></label>
+  </p>
+</div>
